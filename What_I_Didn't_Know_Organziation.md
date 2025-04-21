@@ -57,9 +57,9 @@
 
 ## cascade : 부모 엔티티의 특정 작업(CRUD)이 자식 엔티티에게도 전파되도록 하는 설정.
 
-*** JPA에서 @OneToMany, @ManyToOne, @OneToOne, @ManyToMany 관계 설정시 사용
+>> JPA에서 @OneToMany, @ManyToOne, @OneToOne, @ManyToMany 관계 설정시 사용
  
-*** CasecadeType.REMOVE : 부모 삭제 시 자식도 삭제
+>> CasecadeType.REMOVE : 부모 삭제 시 자식도 삭제
 
 >> CasecadeType.ALL : 부모 변경이 자식에게 모두 전파
  
