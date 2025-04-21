@@ -3,10 +3,10 @@
 ## 위키독스 링크: https://wikidocs.net/160023
 
 
-*** STS (Spring Tool Suite) : 이클립스 기반 IDE. 스프링 프레임워크 개발/관리 도구 제공.
+***STS (Spring Tool Suite) : 이클립스 기반 IDE. 스프링 프레임워크 개발/관리 도구 제공.
 
 
-*** Tomcat: 자바 기반 WAS
+***Tomcat: 자바 기반 WAS
 
 > http요청을 받아 서블릿과 jsp 실행
  
