@@ -8,11 +8,11 @@
 
 * Tomcat: 자바 기반 WAS
 
- * http요청을 받아 서블릿과 jsp 실행
+  * http요청을 받아 서블릿과 jsp 실행
  
- * 서블릿 (Servlet): 동적 웹페이지 개발에 사용되는 자바 기반 웹app 프로그래밍 기술.
+  * 서블릿 (Servlet): 동적 웹페이지 개발에 사용되는 자바 기반 웹app 프로그래밍 기술.
   
- * jsp (JavaServer Pages): html코드에 java 코드를 넣어 동적 웹페이지를 생성하는 웹app 도구. jsp 실행시, 서블릿으로 변환돼 서버 동작.
+  * jsp (JavaServer Pages): html코드에 java 코드를 넣어 동적 웹페이지를 생성하는 웹app 도구. jsp 실행시, 서블릿으로 변환돼 서버 동작.
 
 
 ### 페이징 기능 : 홈페이지를 쪽수 단위로 나누는 기능(1쪽,2쪽,..)
