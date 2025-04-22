@@ -105,9 +105,10 @@
   * DTO에서 불러온 데이터를 통해 @Service 클래스에서 액션을 수행함.
 
 
-* Thymeleaf 에서의 @{ } : URL을 동적으로 작성
+* Thymeleaf 에서의 @{ . . . } : URL을 동적으로 작성
 
-* 그 { } 안에서의 | | : 문자열 안에 ${ } 표현식을 사용케 함
+* | . . . | : 문자열 안에 ${ } 표현식을 동적으로 사용케 함 (선택)
+  *${ . . . } : 변수에 접근하는 표현식
 
 
 * HttpStatus.NOT_FOUND : 404 에러코드를 담음
@@ -121,3 +122,17 @@
     * 컴파일은 .java 코드를 바이트 코드 파일(.class)로 변환하여 JVM이 실행할 수 있도록 함. 
     * 직렬화는 메모리에 존재하는 객체를 바이트 스트림(네트워크, 파일)으로 변환하여 저장.
 
+
+* <form th:action=" ">태그 : form 태그가 어디로 데이터를 받을지 지정하는 주소(url)
+  * <form method=" "> 태그: 해당 form태그가 get방식일지, post방식일지 결정.
+  * 매핑 어노테이션 을 통해 해당 action의 값(url)과 동일한 url을 제시할 경우, 두 메서드끼리 매핑되어 데이터를 클라이언트가 받아 쓸 수 있게됨.
+
+
+* Model 객체는 언제 쓰이는가? : Spring에서 컨트롤러 메서드가 템플릿(HTML)에 데이터를 넘겨줘야할 때 이용
+
+
+* Bootstrap : 웹사이트를 쉽게 만들 수 있게 도와주는 CSS, JS 프레임워크. class를 태그마다 지정만 하면됨.
+   * docs : https://getbootstrap.kr/docs/5.3/getting-started/introduction/
+
+
+*<th:each=". . . , loop : ${. . .}"> 에서의 loop: 현재 반복 상태에 대한 횟수 및 순서를 보여주는 Thymeleaf 템플릿 기능
