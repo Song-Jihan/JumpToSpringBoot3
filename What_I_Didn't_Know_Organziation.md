@@ -135,4 +135,4 @@
    * docs : https://getbootstrap.kr/docs/5.3/getting-started/introduction/
 
 
-*<th:each=". . . , loop : ${. . .}"> 에서의 loop: 현재 반복 상태에 대한 횟수 및 순서를 보여주는 Thymeleaf 템플릿 기능
+* <th:each=". . . , loop : ${. . .}"> 에서의 loop: 현재 반복 상태에 대한 횟수 및 순서를 보여주는 Thymeleaf 템플릿 기능
