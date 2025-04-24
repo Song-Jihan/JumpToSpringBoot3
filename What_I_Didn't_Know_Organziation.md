@@ -105,12 +105,17 @@
   * DTO에서 불러온 데이터를 통해 @Service 클래스에서 액션을 수행함.
 
 
-* Thymeleaf 에서의 @{ . . . } : URL을 동적으로 작성
-
-* | . . . | : 문자열 안에 ${ } 표현식을 동적으로 사용케 함 (선택)
-  *${ . . . } : 변수에 접근하는 표현식
-
-
+* | . . . | : 문자열 안에 ${ } 표현식을 동적으로 사용케 함 (선택사항)
+  
+* Thymeleaf 에서의 값 표현 구문 5가지
+  * @{ . . . } : 링크 표현식(URL을 동적으로 작성)
+  * ${ . . . } : 변수에 접근하는 표현식
+  * *{ . . . } : 선택변수에 접근하는 표현식
+  * #{ . . . } : 메세지 표현식
+  * ~{ . . . } : fragment 표현식
+  >> https://bnzn2426.tistory.com/140
+ 
+   
 * HttpStatus.NOT_FOUND : 404 에러코드를 담음
 
 
@@ -132,7 +137,7 @@
 
 
 * Bootstrap : 웹사이트를 쉽게 만들 수 있게 도와주는 CSS, JS 프레임워크. class를 태그마다 지정만 하면됨.
-   * docs : https://getbootstrap.kr/docs/5.3/getting-started/introduction/
+>> docs : https://getbootstrap.kr/docs/5.3/getting-started/introduction/
 
 
 * <th:each=". . . , loop : ${. . .}"> 에서의 loop: 현재 반복 상태에 대한 횟수 및 순서를 보여주는 Thymeleaf 템플릿 기능
@@ -140,4 +145,16 @@
 
 * 표준 HTML 작성 방식을 따르지 않으면 브라우저는 Quirks Mode를 이용해 해석함.
   * 하지만, Quirks Mode는 브라우저마다 다르게 작동/해석하고, JS 코드가 꼬일 수 있으며, 접근성이 떨어질 수 있어 표준 html 작성은 필수임.
+ 
 
+* Spring Boot Validation 라이브러리를 통해 사용자의 입력값 검증 가능
+  * https://jakarta.ee/specifications/bean-validation/3.0/apidocs/
+
+ 
+* Thymeleaf에서 #은 Thymeleaf 표준 객체(유틸리티 객체)에 접근할때 쓰는 문법. (ex. Java에서 Math.random())
+>> Validation 에러 메시지 docs - https://www.thymeleaf.org/doc/tutorials/3.1/thymeleafspring.html#validation-and-error-messages
+
+
+* Spring MVC에서 컨트롤러 메서드의 매개변수가 @RequestParam, @PathVariable, @ModelAttribute, 혹은 그냥 POJO 일 경우, 매개변수에만 해당 바인딩할 객체를 적어놓아도 자동으로 Spring에서 바인딩을 진행.
+ * 바인딩 이후, 동시에 Model에 등록돼 View로 넘어감. 즉, Model model 을 통해 View로 넘기는 행위를 자동으로 해줌.
+ * POJO (Plain Old Java Object) : 객체 지향적인 원리에 충실하며, 특정 환경과 기술에 종속되지 않고 필요에 따라 재활용 가능한 방식으로 설계된 순수한 오브젝
