@@ -156,13 +156,13 @@
 
 
 * Spring MVC에서 컨트롤러 메서드의 매개변수가 @RequestParam, @PathVariable, @ModelAttribute, 혹은 그냥 POJO 일 경우, 매개변수에만 해당 바인딩할 객체를 적어놓아도 자동으로 Spring에서 바인딩을 진행.
- * 바인딩 이후, 동시에 Model에 등록돼 View로 넘어감. 즉, Model model 을 통해 View로 넘기는 행위를 자동으로 해줌.
- * POJO (Plain Old Java Object) : 객체 지향적인 원리에 충실하며, 특정 환경과 기술에 종속되지 않고 필요에 따라 재활용 가능한 방식으로 설계된 순수한 오브젝트
+  * 바인딩 이후, 동시에 Model에 등록돼 View로 넘어감. 즉, Model model 을 통해 View로 넘기는 행위를 자동으로 해줌.
+  * POJO (Plain Old Java Object) : 객체 지향적인 원리에 충실하며, 특정 환경과 기술에 종속되지 않고 필요에 따라 재활용 가능한 방식으로 설계된 순수한 오브젝트
 
 
 * GET 방식에서 특정 파라미터 값을 가져오려면 ? 와 & 를 이용
- * ? : 첫번째 파라미터인 경우
- * ^ : 첫번째 이후의 파라미터인 경우
+  * ? : 첫번째 파라미터인 경우
+  * ^ : 첫번째 이후의 파라미터인 경우
 
 
 * th:classappend="조건식 ? 클래스_값" 은 조건식이 true일 때 해당 클래스 값을 class 속성에 추가함.
