@@ -44,4 +44,12 @@ public class QuestionService {
 		q.setCreateDate(LocalDateTime.now());
 		this.questionRepository.save(q);
 	}
+	
+	public void delete(Integer id) {
+		Optional<Question> question=this.questionRepository.findById(id);
+		if(question.isPresent()) {
+			this.questionRepository.deleteById(id);
+		}
+		else throw new DataNotFoundException("question not found");
+	}
 }
