@@ -193,5 +193,29 @@
   * /h2-console 은 iframe으로 구성돼있어 Spring Security에서 차단함. 때문에 별도로 조정 필요.
 
 
-* 
- 
+* Column 어노테이션에 columnDefinition="TEXT" 을 지정하지 않으면 JPA가 자동으로 매핑
+
+
+* unique=true를 설정한 속성은 h2-console에 서두에 "UK_"가 붙음
+  * UK_ = Unique Key 
+
+
+* Spring Security는 BCryptPasswordEncoder 클래스를 통해 비밀번호 및 개인정보 등의 중요 정보를 암호화
+  * BCrypt 해시 함수를 통해 특정 정보를 암호화하고 검증
+  * PasswordEncoder 는 BCryptPasswordEncoder 클래스의 인터페이스
+
+
+* bindingResult.rejectValue(필드명, 오류 코드, 오류 메시지) : Spring MVC 폼 검증 메서
+  >> bindingResult 매개변수 선언부분의 옆에 위치한 객체 매개변수의 필드를 가져옴.
+  * 필드명 : 오류가 발생한 객체의 필드
+  * 오류 코드 (중요★): Spring 메시지 리졸버가 찾을 수 있는 오류 코드 문자열.
+    >> 해당 Arguments의 값은 messages. 파일같은 국제화 메시지 파일에서 해당 값을 찾는 일종의 Key 역할을 함.
+    * 메시지 리졸버 : 클라이언트가 보낸 요청 데이터를 컨트롤러 메서드의 파라미터로 바인딩하는 객체
+  * 오류 메시지 : 기본적으로 사용자에게 보여줄 직접 작성한 오류 메시지
+    >> 해당 Arguments의 값은 오류 코드에서 매칭되는 코드가 없다면 출력됨.
+
+
+* href = "#" : 클릭 이벤트 발생 시 페이지 전환이 이루어지지 않고 아무런 일도 안일어남. 즉, 의미없는 링크를 의미함.
+
+
+*  
