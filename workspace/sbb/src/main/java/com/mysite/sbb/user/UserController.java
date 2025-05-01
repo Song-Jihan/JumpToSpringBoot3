@@ -64,13 +64,11 @@ public class UserController {
 			return "signup_form";
 		}
 		
-		if(bindingResult.hasErrors()) {
-			orderedErrors.clear();
-			return "signup_form";
-		}
-		
-		
-		
 		return "redirect:/";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "login_form";
 	}
 }

@@ -6,7 +6,7 @@
 		</div>
 	</div>
 	<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
-		<div th:insert="~{signup_form_errors::signupFormErrorsFragment}"></div>
+		<div th:replace="~{signup_form_errors::signupFormErrorsFragment}"></div>
 		<div class="my-3">
 			<label for="username" class="form-label">사용자ID</label>
 			<input type="text" th:field="*{userName}" class="form-control">
