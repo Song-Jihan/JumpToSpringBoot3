@@ -25,9 +25,7 @@
 
 
 * Gradle : 개발부터 배포까지 자동화를 통해 빠르게 사용자들이 이용할 수 있게 (CI/CD) 하기 위한 Groovy 기반 오픈소스 빌드 도구
-
-
-* Groovy : 자바 기반의 OOP 언어. 기존 언어보다 동적이고 유연하며 컴파일 없이 실행가능한 스크립팅 언어
+  * Groovy : 자바 기반의 OOP 언어. 기존 언어보다 동적이고 유연하며 컴파일 없이 실행가능한 스크립팅 언어
 
 
 * DTO (Data Transfer Object) : 프로세스 간 데이터 교환을 위해 사용하는 객체
@@ -218,4 +216,26 @@
 * href = "#" : 클릭 이벤트 발생 시 페이지 전환이 이루어지지 않고 아무런 일도 안일어남. 즉, 의미없는 링크를 의미함.
 
 
-*  
+* param.error : thymeleaf에서 요청 파라미터 중 error가 포함되어 있는 값을 가져올때 쓰는 표현 (ex. 로그인 실패)
+  * Spring Security에서는 로그인 요청 실패 시, 매개변수로 error를 무조건 전달
+ 
+
+* enum에서는 '요소이름(. . .)' 의 형태로 상수를 작성 가능함. 해당 괄호 안에 있는 값과 요소이름은 같은 역할을 함.
+  * enum 내부의 요소들은 기본적으로 불변하기에 final이 default 
+
+
+* Spring Security에서는 UserDetails, UserDetailsService 인터페이스를 제공. 유저의 정보(id,비번,권한)를 관리하도록 함.
+  * UserDetailsService는 UserDetails를 반환
+  * UserDetails는 GrantedAuthorities를 반환
+
+
+* ROLE 과 GrantedAuthority의 의 차이점: 일반적으로 둘은 동의어로 쓰임. GrantedAuthority의 권한 그 자체를 말함. ROLE은 특별한 정의는 없지만 GrantedAuthority의 대응되는 enum에 입력한 권한 요소들의 네이밍 컨밴션 서두에 "ROLE_"의 형태로 쓰임. 그리고 서두에 이런 ROLE_ 이 붙은 경우 GrantedAuthority의 취급됨.
+
+
+* SimpleGrantedAuthority : GrantedAuthority의 기본 구현체(클래스)로 String을 리턴함.
+
+
+* AuthenticationManager : Spring Security의 사용자 인증과 권한 부여 프로세스를 처리. 내가 구현한 (혹은 Bean 처리한) 사용자 인증 메서드(PasswordEncoder)와 권한 부여 메서드(UserDetailsService 구현체)가 자동으로 사용됨.
+
+
+* 
