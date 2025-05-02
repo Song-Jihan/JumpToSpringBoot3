@@ -235,6 +235,16 @@
 * SimpleGrantedAuthority : GrantedAuthority의 기본 구현체(클래스)로 String을 리턴함.
 
 
+* 이미 생성된 JPA 엔티티 내부의 필드이름을 수정해도 수정이전의 컬럼정보는 h2 console에 계속 담겨있음.
+  * 해결법 : "ALTER TABLE '엔티티 이름' DROP COLUMN '삭제하고픈 속성 이름'" 을 h2 console에 입력하여 더이상 쓰지않는 이전의 컬럼을 삭제 
+
+
+* @EnableMethodSecurity : Spring Security에서 해당 어노테이션을 설정한 메서드 및 클래의 접근 제어
+  * 함께 이용되는 다른 어노테이션
+    * @PreAuthorize : 메서드 호출 이전에 접근을 제한할지 말지
+    * @PostAuthorize : 메서드 호출 이후에 접근을 제한할지 말지
+
+
 * AuthenticationManager : Spring Security의 사용자 인증과 권한 부여 프로세스를 처리. 내가 구현한 (혹은 Bean 처리한) 사용자 인증 메서드(PasswordEncoder)와 권한 부여 메서드(UserDetailsService 구현체)가 자동으로 사용됨.
 
 
