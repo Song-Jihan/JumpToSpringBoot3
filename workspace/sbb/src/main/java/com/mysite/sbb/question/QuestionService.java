@@ -47,11 +47,14 @@ public class QuestionService {
 		this.questionRepository.save(q);
 	}
 	
-	public void delete(Integer id) {
-		Optional<Question> question=this.questionRepository.findById(id);
-		if(question.isPresent()) {
-			this.questionRepository.deleteById(id);
-		}
-		else throw new DataNotFoundException("question not found");
+	public void delete(Question question) {
+		this.questionRepository.delete(question);
+	}
+	
+	public void modify(Question question, String subject, String content) {
+		question.setContent(content);
+		question.setSubject(subject);
+		question.setModifyDate(LocalDateTime.now());
+		this.questionRepository.save(question);
 	}
 }
