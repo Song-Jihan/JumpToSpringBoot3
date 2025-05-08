@@ -1,6 +1,8 @@
 # 점프 투 스프링부트3 모르는 점 및 용어정리
 
-## 위키독스 링크: https://wikidocs.net/160023
+## 위키독스 링크: [https://wikidocs.net/160023](https://wikidocs.net/160023)
+### Bootstrap : [https://getbootstrap.com/docs/5.3/getting-started/introduction/](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+### Thymeleaf : [https://www.thymeleaf.org/documentation.html](https://www.thymeleaf.org/documentation.html)
 
 
 * STS (Spring Tool Suite) : 이클립스 기반 IDE. 스프링 프레임워크 개발/관리 도구 제공.
@@ -150,7 +152,7 @@
   * https://jakarta.ee/specifications/bean-validation/3.0/apidocs/
 
  
-* Thymeleaf에서 #은 Thymeleaf 표준 객체(유틸리티 객체)에 접근할때 쓰는 문법. (ex. Java에서 Math.random())
+* Thymeleaf에서 #(샵)은 Thymeleaf 표준 객체(유틸리티 객체)에 접근할때 쓰는 문법. (유틸리티 객체 ex. Java에서 Math.random())
 >> Validation 에러 메시지 docs - https://www.thymeleaf.org/doc/tutorials/3.1/thymeleafspring.html#validation-and-error-messages
 
 
@@ -254,6 +256,32 @@
 
 * form 태그 내부의 모든 입력필드(textarea,input,select 등)들은 name속성을 기준으로 묶어 자동으로 POST 요청을 보냄.
   * HTTP POST요청을 현재 페이지 혹은 action에 지정한 url로 전송.
+
+
+* 'javascprit:void(0)' : void(0) 아무것도 하지 말라는 의미의 내장 함수.
+  * a태그 하이퍼링크에 본래는 URL을 입력해 넣고 페이지를 이동한다. 하지만, 페이지 이동을 하지 않고 (이동할 URL 또한 존재하지 않음) 오직 자바스크립트 코드만 실행하고 싶을 때 다음처럼 작성할 수 있음.
+
+
+*  html부분에서 isAuthenticated() (즉, 로그인한 사람만)를 부여받은 권한자만 특정 html코드(수정/삭제 버튼)을 보이게 했는데, Controller에서 또 PreAuthorize를 통해 2단 검증하는 이유
+  * 꼭 브라우저를 통해 접근하리라는 법이 없기 때문에 프론트엔드에서도, 백엔드에서도 모두 검증이 필요함.
+
+
+* js에서의 fetch(): fetch 내부에 있는 url로의 페이지 이동을 지시함.
+  * .then{ } : fetch로 페이지 이동 이후에 실행할 명령어를 적음.
+  * .catch() { } : 자바의 catch와 동일
+
+ 
+* AJAX (Asynchronous JavaScript and XML) : 비동기적으로 서버와 데이터를 주고 받아 웹 페이지의 전체를 새로고치지 않고 웹 페이지의 일부만 업데이되는 웹 개발 기술
+
+
+* 대개 build.gradle 파일에는 implements한 라이브러리들의 버전을 접속하지 않으면, SpringBoot에서 호환성이 가장 좋은 버전들을 선별해 자동으로 실행함.
+  * SpringBoot가 내부적으로 관리하는 라이브러리가 아니라면 직접 상세 버전까지 입력해줘야함!!
+
+ 
+* Component (컴포넌트) : props라는 input값을 받고 UI같은 View상태에 따른 화면을 출력하는 모듈
+
+
+* escape 처리 : 웹 개발에서 특정 문자가 html문서나 다른 마크업 언어로 해석되지 않게 변환하는 과정. 사용자가 입력한 텍스트를 안전하게 출력할 수 있게함.
 
 
 * 
