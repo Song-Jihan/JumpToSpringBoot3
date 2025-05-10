@@ -1,9 +1,12 @@
 # 점프 투 스프링부트3 모르는 점 및 용어정리
 
 ## 위키독스 링크: [https://wikidocs.net/160023](https://wikidocs.net/160023)
-### Bootstrap : [https://getbootstrap.com/docs/5.3/getting-started/introduction/](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
-### Thymeleaf : [https://www.thymeleaf.org/documentation.html](https://www.thymeleaf.org/documentation.html)
-
+### 라이브러리 및 인터페이스 참고 사이트(docs) 
+> Bootstrap : [https://getbootstrap.com/docs/5.3/getting-started/introduction/](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+> 
+> Thymeleaf : [https://www.thymeleaf.org/documentation.html](https://www.thymeleaf.org/documentation.html)
+> 
+> Specification : [https://docs.spring.io/spring-data/jpa/reference/jpa/specifications.html](https://docs.spring.io/spring-data/jpa/reference/jpa/specifications.html)
 
 * STS (Spring Tool Suite) : 이클립스 기반 IDE. 스프링 프레임워크 개발/관리 도구 제공.
 
@@ -284,4 +287,4 @@
 * escape 처리 : 웹 개발에서 특정 문자가 html문서나 다른 마크업 언어로 해석되지 않게 변환하는 과정. 사용자가 입력한 텍스트를 안전하게 출력할 수 있게함.
 
 
-* 
+* SQL에서 '%' : 와일드가트 문자. LIKE문과 함께 쓰임. 
