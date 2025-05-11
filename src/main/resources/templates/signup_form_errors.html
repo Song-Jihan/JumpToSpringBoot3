@@ -1,0 +1,7 @@
+<div th:fragment="signupFormErrorsFragment"
+     class="alert alert-danger"
+     role="alert"
+     th:if="${orderedErrors}">
+
+    <div th:each="err : ${orderedErrors}" th:text="${err}" />
+</div>
