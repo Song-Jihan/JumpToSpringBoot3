@@ -53,10 +53,10 @@ public class QuestionService {
 		Pageable pageable=PageRequest.of(page, 10, Sort.by(sorts));
 		Specification<Question> spec=search(kw);
 		//Specification을 통한 Query문 자동 구현
-		//return this.questionRepository.findAll(spec,pageable);
+		return this.questionRepository.findAll(spec,pageable);
 		
 		//Query문 직접 구현
-		return this.questionRepository.findAllByKeyword(kw, pageable);
+		//return this.questionRepository.findAllByKeyword(kw, pageable);
 	}
 	
 	public Question getQuestion(Integer id) {

@@ -6,7 +6,6 @@ import java.security.Principal;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerForm;
+import com.mysite.sbb.answer.AnswerService;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
 
@@ -28,8 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class QuestionController {
-    private final QuestionRepository questionRepository;
-	
+	private final AnswerService answerService;
 	private final QuestionService questionService;
 	private final UserService userService;
 	
@@ -43,9 +43,12 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/detail/{id}")
-	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
+	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm,
+			@RequestParam(value="answerPage",defaultValue="0") int answerPage) {
 		Question question=this.questionService.getQuestion(id);
+		Page<Answer> answerPaging=this.answerService.getList(question, answerPage);
 		model.addAttribute("question",question);
+		model.addAttribute("answerPaging",answerPaging);
 		return "question_detail";
 	}
 	

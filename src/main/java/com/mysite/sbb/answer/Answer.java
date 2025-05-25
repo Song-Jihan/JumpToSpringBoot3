@@ -38,5 +38,5 @@ public class Answer {
 	private LocalDateTime modifyDate;
 	
 	@ManyToMany
-	public Set<SiteUser> voter;
+	Set<SiteUser> voter;
 }
