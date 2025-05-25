@@ -287,4 +287,12 @@
 * escape 처리 : 웹 개발에서 특정 문자가 html문서나 다른 마크업 언어로 해석되지 않게 변환하는 과정. 사용자가 입력한 텍스트를 안전하게 출력할 수 있게함.
 
 
-* SQL에서 '%' : 와일드가트 문자. LIKE문과 함께 쓰임. 
+* SQL에서 '%' : 와일드가트 문자. LIKE문과 함께 쓰임.
+
+
+* 다대다(ManyToMany) 혹은 1대다(OneToMany)같이 다수의 컬럼에 대해 정렬 할때, 대개 JOIN + GROUP BY 를 통해 직접 Query문을 작성함.
+  * AnswerService의 getList메서드에서는 Set<SiteUser>를 바로 Sort.Order 시키고 있음.
+    >> Sort.Order은 단일 컬럼으로 작동되게 설계돼있음.
+    >> 해당 코드줄은 사실 불안정함!! H2의 hibernate같은 특수 RDB가 유연하게 JOIN 처리하여 정렬된것처럼 표시됨. 즉, 내부적으로는 어떤 구조로 정렬돼있을지 보장이 안됨!
+
+
