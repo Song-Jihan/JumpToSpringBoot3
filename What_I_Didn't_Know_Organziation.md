@@ -163,6 +163,13 @@
   * 바인딩 이후, 동시에 Model에 등록돼 View로 넘어감. 즉, Model model 을 통해 View로 넘기는 행위를 자동으로 해줌.
   * POJO (Plain Old Java Object) : 객체 지향적인 원리에 충실하며, 특정 환경과 기술에 종속되지 않고 필요에 따라 재활용 가능한 방식으로 설계된 순수한 오브젝트
 
+* Spring에서 클라이언트에게 받은 요청을 자바 객체에 바인딩해주는 어노테이션
+  * @RequestParam : 1개의 HTTP 요청 파라미터를 받기 위해 사용됨. RequestParam을 설정한 매개변수는 요청 메시지를 받을때 무조건 할당받아야함.
+    * HTTP 요청 파라미터에 해당 매개변수를 일일히 설정 안해도 이용가능하게 하는 법 : required를 false로 만들어 필수 할당을 해소해주거나, defaultValue 설정을 통해 기본값을 지정해주기
+  * @PathVariable : 경로 변수를 표시하기 위해 메서드의 매개변수에 사용. 'Get(또는 Post)Mapping( ...{경로 변수} )' 를 이용할때 URL에 있는 경로 변수 값을 추출하여 매개변수에 할당.
+  * @ModelAttribute : 폼 형태의 HTTP Body 및 요청 파라미터를 자바객체(DTO, 폼 클래스)에 삽입(바인딩)해줌. 요청파라미터 이름과 변수 이름이 동일하면 어노테이션 생략 가능.
+    * 어노테이션 괄호 내의 String : Model에서 쓰일 해당 객체의 이름. (ex. @ModelAttribute("commentForm") CommentForm commentForm == model.addAttribute("commentForm", commentForm) )
+
 
 * GET 방식에서 특정 파라미터 값을 가져오려면 ? 와 & 를 이용
   * ? : 첫번째 파라미터인 경우
