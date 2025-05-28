@@ -51,7 +51,7 @@ public class AnswerService {
 	
 	public void modify(Answer answer, String content) {
 		answer.setContent(content);
-		answer.setCreateDate(LocalDateTime.now());
+		answer.setModifyDate(LocalDateTime.now());
 		this.answerRepository.save(answer);
 	}
 	
