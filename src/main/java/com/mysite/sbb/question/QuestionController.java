@@ -19,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.answer.AnswerService;
-import com.mysite.sbb.comment.CommentForm;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
 
@@ -44,13 +43,12 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/detail/{id}")
-	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm,CommentForm commentForm,
+	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm,
 			@RequestParam(value="answerPage",defaultValue="0") int answerPage) {
 		Question question=this.questionService.getQuestion(id);
 		Page<Answer> answerPaging=this.answerService.getList(question, answerPage);
 		model.addAttribute("question",question);
 		model.addAttribute("answerPaging",answerPaging);
-		model.addAttribute("commentForm",commentForm);
 		return "question_detail";
 	}
 	
