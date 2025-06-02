@@ -61,10 +61,12 @@
 * cascade : 부모 엔티티의 특정 작업(CRUD)이 자식 엔티티에게도 전파되도록 하는 설정.
 
   * JPA에서 @OneToMany, @ManyToOne, @OneToOne, @ManyToMany 관계 설정시 사용
+    * 다음 어노테이션같은 양방향 관계 설정 시, MappedBy 필수! : 관계가 있는 두 객체가 서로 상대 객체의 데이터를 수정하려 하면 그것은 무결성 저해!! 때문에 한쪽 객체에게만 수정 권한을 부여해야함.
+      * MappedBy에 정의되지 않은 객체가 수정 권한을 부여받게 됨
  
-  * CasecadeType.REMOVE : 부모 삭제 시 자식도 삭제
+  * CascadeType.REMOVE : 부모 삭제 시 자식도 삭제
 
-  * CasecadeType.ALL : 부모 변경이 자식에게 모두 전파
+  * CascadeType.ALL : 부모 변경이 자식에게 모두 전파
  
   * orphanRemoval=true : 부모가 자식을 리스트에서 제거(자식과의 관계를 제거)하면 자식이 삭제됨
  
