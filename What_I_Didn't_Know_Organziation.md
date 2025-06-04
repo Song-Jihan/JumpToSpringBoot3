@@ -218,7 +218,7 @@
   * PasswordEncoder 는 BCryptPasswordEncoder 클래스의 인터페이스
 
 
-* bindingResult.rejectValue(필드명, 오류 코드, 오류 메시지) : Spring MVC 폼 검증 메서
+* bindingResult.rejectValue(필드명, 오류 코드, 오류 메시지) : Spring MVC 폼 검증 메서드
   >> bindingResult 매개변수 선언부분의 옆에 위치한 객체 매개변수의 필드를 가져옴.
   * 필드명 : 오류가 발생한 객체의 필드
   * 오류 코드 (중요★): Spring 메시지 리졸버가 찾을 수 있는 오류 코드 문자열.
