@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.category.Category;
+import com.mysite.sbb.comment.Comment;
 import com.mysite.sbb.user.SiteUser;
 
 import jakarta.persistence.CascadeType;
@@ -38,6 +40,9 @@ public class Question {
 	@OneToMany(mappedBy="question",cascade=CascadeType.REMOVE)
 	private List<Answer> answerList;
 	
+	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+	private List<Comment> commentList;
+	
 	@ManyToOne
 	public SiteUser author;
 	
@@ -45,4 +50,7 @@ public class Question {
 	
 	@ManyToMany
 	Set<SiteUser> voter;
+	
+	@ManyToOne
+	private Category category;
 }

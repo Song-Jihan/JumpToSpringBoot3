@@ -13,6 +13,7 @@
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호</label>
             <input type="password" name="password" id="password" class="form-control">
+			<a th:href="@{/user/recovery_password}" th:text="비밀번호_찾기"></a>
         </div>
         <button type="submit" class="btn btn-primary">로그인</button>
     </form>

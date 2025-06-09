@@ -40,6 +40,13 @@ public class AnswerService {
 		return this.answerRepository.findAllByQuestion(question, pageable);
 	}
 	
+	public Page<Answer> getListByAuthor(int page,SiteUser siteuser){
+		List<Sort.Order> sorts=new ArrayList<>();
+		sorts.add(Sort.Order.desc("createDate"));
+		Pageable pageable=PageRequest.of(page, 5, Sort.by(sorts));
+		return this.answerRepository.findByAuthor(siteuser,pageable);
+	}
+	
 	public Answer getAnswer(Integer id) {
 		Optional<Answer> answer=this.answerRepository.findById(id);
 		if(answer.isPresent()) {
@@ -51,7 +58,7 @@ public class AnswerService {
 	
 	public void modify(Answer answer, String content) {
 		answer.setContent(content);
-		answer.setCreateDate(LocalDateTime.now());
+		answer.setModifyDate(LocalDateTime.now());
 		this.answerRepository.save(answer);
 	}
 	

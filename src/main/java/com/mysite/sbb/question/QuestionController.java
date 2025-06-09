@@ -1,7 +1,7 @@
 package com.mysite.sbb.question;
 
-
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,9 +19,13 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.answer.AnswerService;
+import com.mysite.sbb.category.Category;
+import com.mysite.sbb.category.CategoryService;
+import com.mysite.sbb.comment.CommentForm;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -32,50 +36,70 @@ public class QuestionController {
 	private final AnswerService answerService;
 	private final QuestionService questionService;
 	private final UserService userService;
+	private final CategoryService categoryService;
 	
 	@GetMapping("/list")
 	public String list(Model model,@RequestParam(value="page",defaultValue="0") int page,
-			@RequestParam(value="kw",defaultValue="")String kw) {
-		Page<Question> paging = this.questionService.getList(page,kw);
+			@RequestParam(value="kw",defaultValue="")String kw, HttpServletRequest request) {
+		Page<Question> paging = this.questionService.getListByKeyword(page,kw,"질문게시판");
+		List<Category> categoryList=this.categoryService.getAll();
+		model.addAttribute("paging",paging);
+		model.addAttribute("kw",kw);
+		model.addAttribute("categoryList", categoryList);
+		return "question_list";
+	}
+	
+	@GetMapping("/freepost/list")
+	public String freepstList(Model model,@RequestParam(value="page",defaultValue="0") int page,
+			@RequestParam(value="kw",defaultValue="")String kw, HttpServletRequest request) {
+		Page<Question> paging = this.questionService.getListByKeyword(page,kw,"자유게시판");
 		model.addAttribute("paging",paging);
 		model.addAttribute("kw",kw);
 		return "question_list";
 	}
 	
 	@GetMapping("/detail/{id}")
-	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm,
+	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm,CommentForm commentForm,
 			@RequestParam(value="answerPage",defaultValue="0") int answerPage) {
 		Question question=this.questionService.getQuestion(id);
 		Page<Answer> answerPaging=this.answerService.getList(question, answerPage);
+		List<Category> categoryList=this.categoryService.getAll();
 		model.addAttribute("question",question);
 		model.addAttribute("answerPaging",answerPaging);
+		model.addAttribute("commentForm",commentForm);
+		model.addAttribute("categoryList", categoryList);
 		return "question_detail";
 	}
 	
 	@PreAuthorize("isAuthenticated()") 
 	@GetMapping("/create")
-	public String questionCreate(QuestionForm questionForm) {
+	public String questionCreate(QuestionForm questionForm,Model model) {
+		model.addAttribute("categoryList", this.categoryService.getAll());
 		return "question_form";
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/create")
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult,Principal principal) {
+	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult,Principal principal,Model model) {
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("categoryList",this.categoryService.getAll());
 			return "question_form";
 		}
 		SiteUser siteUser=this.userService.getUser(principal.getName());
-		this.questionService.create(questionForm.getSubject(),questionForm.getContent(),siteUser);
+		Category category=this.categoryService.getCategoryByName(questionForm.getCategory());
+		this.questionService.create(questionForm.getSubject(),questionForm.getContent(),siteUser,category);
 		return "redirect:/question/list"; //질문 저장후 질문 목록으로 이동
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/modify/{id}")
-	public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id,Principal principal) {
+	public String questionModify(QuestionForm questionForm, @PathVariable("id") Integer id,Principal principal,Model model) {
 		Question question = this.questionService.getQuestion(id);
 		if(!question.getAuthor().getUsername().equals(principal.getName())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
 		}
+		List<Category> categoryList=this.categoryService.getAll();
+		model.addAttribute("categoryList", categoryList);
 		questionForm.setSubject(question.getSubject());
 		questionForm.setContent(question.getContent());
 		return "question_form";

@@ -33,6 +33,10 @@
 				<td><span th:if="${question.author != null}" th:text="${question.author.username}"></span></td>
 				<td th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></td>
 			</tr>
+			
+			<tr th:if="${paging.empty}">
+				<td colspan="4" class="text-center">게시글이 존재하지 않습니다.</td>
+			</tr>
 		</tbody>
 	</table>
 

@@ -26,9 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class AnswerController {
-
-	private final AnswerRepository answerRepository;
-
 	private final QuestionService questionService;
 	private final AnswerService answerService;
 	private final UserService userService;
