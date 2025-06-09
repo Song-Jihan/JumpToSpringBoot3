@@ -218,16 +218,22 @@
 * Spring Security는 BCryptPasswordEncoder 클래스를 통해 비밀번호 및 개인정보 등의 중요 정보를 암호화
   * BCrypt 해시 함수를 통해 특정 정보를 암호화하고 검증
   * PasswordEncoder 는 BCryptPasswordEncoder 클래스의 인터페이스
+    * Spring Security를 이용할 때 쓰는 PasswordEncoder matches 란?
+      >> String형태의 Password를 입력하면 인코딩 되어 DB에 해시처리 됨. 따라서, 내가 찾고자 하는 password와 DB에 존재하는 password가 일치하는지 확인할때, 단순히 equals를 통해 비교하면 불일치하다고 표시될 수 있음. 이때 matches메서드를 사용하면 해시된 password의 원본형태와 직접 비교 가능해짐. 
 
-
-* bindingResult.rejectValue(필드명, 오류 코드, 오류 메시지) : Spring MVC 폼 검증 메서드
-  >> bindingResult 매개변수 선언부분의 옆에 위치한 객체 매개변수의 필드를 가져옴.
-  * 필드명 : 오류가 발생한 객체의 필드
-  * 오류 코드 (중요★): Spring 메시지 리졸버가 찾을 수 있는 오류 코드 문자열.
-    >> 해당 Arguments의 값은 messages. 파일같은 국제화 메시지 파일에서 해당 값을 찾는 일종의 Key 역할을 함.
-    * 메시지 리졸버 : 클라이언트가 보낸 요청 데이터를 컨트롤러 메서드의 파라미터로 바인딩하는 객체
-  * 오류 메시지 : 기본적으로 사용자에게 보여줄 직접 작성한 오류 메시지
-    >> 해당 Arguments의 값은 오류 코드에서 매칭되는 코드가 없다면 출력됨.
+* bindingResult : Spring에서 이용되는 검증 메서드. bindingResult의 타겟(객체)에서 발생하는 오류들을 저장함.
+  >> bindingResult 매개변수 선언부분의 옆에 위치한 @ModelAttribute 객체를 타겟팅하여 작동됨! 즉, @ModelAttribute 선언은 필수!
+ 
+  * bindingResult.rejectValue(필드명, 오류 코드, 오류 메시지) : Spring MVC 폼 검증 메서드. 
+  
+    * 필드명 : 오류가 발생한 객체의 필드
+      
+    * 오류 코드 (중요★): Spring message resolver가 찾을 수 있는 오류 코드 문자열.
+      >> 해당 Arguments의 값은 'messages.'파일같은 국제화 메시지 파일에서 해당 값을 찾는 일종의 Key 역할을 함.
+      * message resolver : 클라이언트가 보낸 요청 데이터를 컨트롤러 메서드의 파라미터로 바인딩하는 객체
+        
+    * 오류 메시지 : 기본적으로 사용자에게 보여줄 직접 작성한 오류 메시지
+      >> 해당 Arguments의 값은 오류 코드에서 매칭되는 코드가 없다면 출력됨.
 
 
 * href = "#" : 클릭 이벤트 발생 시 페이지 전환이 이루어지지 않고 아무런 일도 안일어남. 즉, 의미없는 링크를 의미함.
@@ -298,7 +304,7 @@
 * escape 처리 : 웹 개발에서 특정 문자가 html문서나 다른 마크업 언어로 해석되지 않게 변환하는 과정. 사용자가 입력한 텍스트를 안전하게 출력할 수 있게함.
 
 
-* SQL에서 '%' : 와일드가트 문자. LIKE문과 함께 쓰임.
+* SQL에서 '%' : 와일드카드 문자. LIKE문과 함께 쓰임.
 
 
 * 다대다(ManyToMany) 혹은 1대다(OneToMany)같이 다수의 컬럼에 대해 정렬 할때, 대개 JOIN + GROUP BY 를 통해 직접 Query문을 작성함.
@@ -314,3 +320,6 @@
   * ex. A엔티티에서 B에 대해 N:1관계 설정. B엔티티에서 A에 대해 1:N관계 설정. JPA는 해당 관계를 보고 트렌잭션을 동기화하여 A객체에서 B객체에 관한 CRUD 진행 시, B객체에도 똑같이 적용해줌.
   * ***주의!*** JPA 고유의 기능이므로 일반 DB의 경우. A객체에서 B객체에 대한 작업을 진행했다면, B객체에서도 A객체에 대한 작업을 동일하게 ***직접*** 명시해줘야함!!!
   * 영속성 컨텍스트 : JPA 같은 고수준 ORM 프레임워크에서 사용되는 Java/JPA 내부 개념. 서버와 DB 사이의 엔티티를 저장하는 환경으로 엔티티(객체)를 저장하거나 조회하면 엔티티 매니저는 영속성 컨텍스트에 엔티티를 보관 및 관리한다.
+
+ 
+
