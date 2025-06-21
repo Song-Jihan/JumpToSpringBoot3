@@ -309,8 +309,13 @@
 
 * 다대다(ManyToMany) 혹은 1대다(OneToMany)같이 다수의 컬럼에 대해 정렬 할때, 대개 JOIN + GROUP BY 를 통해 직접 Query문을 작성함.
   * AnswerService의 getList메서드에서는 Set<SiteUser>를 바로 Sort.Order 시키고 있음.
-    >> Sort.Order은 단일 컬럼으로 작동되게 설계돼있음.
-    >> 해당 코드줄은 사실 불안정함!! H2의 hibernate같은 특수 RDB가 유연하게 JOIN 처리하여 정렬된것처럼 표시됨. 즉, 내부적으로는 어떤 구조로 정렬돼있을지 보장이 안됨!
+    >> 2025-06-21 답변 페이징 처리에 버그를 동반하여 삭제함.
+    
+    >> AnswerRepository에 Query문 직접 작성
+   
+    * Sort.Order은 단일 컬럼으로 작동되게 설계돼있음.
+      * hibernate상에서 Collection을 그대로 Sort.Order하게 되면 size크기를 기준으로 정렬하는 side effect가 발생함. 때문에 순서 정렬이 되는것. 
+    * 해당 코드줄은 사실 불안정함!! H2의 hibernate같은 특수 RDB가 유연하게 JOIN 처리하여 정렬된것처럼 표시됨. 즉, 내부적으로는 어떤 구조로 정렬돼있을지 보장이 안됨!
 
 
 * RedirectAttributes : 지정한 URL을 redirect로 서버에 전송하면 곧이어 새로운 페이지가 요청됨. 이때 Redirect되는 과정에서 이전에 수정한 모델 데이터가 유지되지 않아 그대로 소멸한채 요청됨. 때문에 RedirectAttributes를 통해 모델 데이터를 복사해 유지할 수 있게함.
