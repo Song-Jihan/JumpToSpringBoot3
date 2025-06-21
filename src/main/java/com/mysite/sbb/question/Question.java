@@ -18,6 +18,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,4 +55,16 @@ public class Question {
 	
 	@ManyToOne
 	private Category category;
+	
+	private LocalDateTime lastAnswerTime;	
+	
+	private LocalDateTime lastCommentTime;
+
+	public void updateLastAnswerTime() {
+		this.lastAnswerTime=LocalDateTime.now();
+	}
+	
+	public void updateLastCommentTime() {
+		this.lastCommentTime=LocalDateTime.now();
+	}
 }

@@ -2,6 +2,7 @@ package com.mysite.sbb.answer;
 
 import java.security.Principal;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +21,7 @@ import com.mysite.sbb.question.QuestionService;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -33,7 +36,7 @@ public class AnswerController {
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/create/{id}")
 	public String createAnswer(Model model, @PathVariable("id") Integer id, @Valid AnswerForm answerForm,
-			BindingResult bindingResult, Principal principal,RedirectAttributes re) {
+			BindingResult bindingResult, Principal principal, RedirectAttributes re) {
 		Question question = this.questionService.getQuestion(id);
 		SiteUser siteUser = this.userService.getUser(principal.getName());
 		if (bindingResult.hasErrors()) {
@@ -41,8 +44,8 @@ public class AnswerController {
 			return "question_detail";
 		}
 		Answer answer = this.answerService.create(question, answerForm.getContent(), siteUser);
-		int page=question.getAnswerList().size()/5;
-		re.addAttribute("answerPage",page);
+		int page = question.getAnswerList().size() / 5;
+		re.addAttribute("answerPage", page);
 		return String.format("redirect:/question/detail/%s#answer_%s", answer.getQuestion().getId(), answer.getId());
 	}
 
@@ -85,12 +88,15 @@ public class AnswerController {
 
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/vote/{id}")
-	public String voteAnswer(Principal principal, @PathVariable("id") Integer id) {
+	public String voteAnswer(Principal principal, @PathVariable("id") Integer id,HttpServletRequest request) {
 		Answer answer = this.answerService.getAnswer(id);
 		SiteUser siteUser = this.userService.getUser(principal.getName());
 		this.answerService.vote(answer, siteUser);
+		String referer = request.getHeader("Referer");
+		if (referer != null) {
+	        return String.format("redirect:" + referer + "#answer_%s", answer.getId());
+	    }
 		return String.format("redirect:/question/detail/%s#answer_%s", answer.getQuestion().getId(), answer.getId());
 	}
 
-	
 }

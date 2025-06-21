@@ -17,6 +17,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,25 +27,34 @@ import lombok.Setter;
 @Entity
 public class Answer {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(columnDefinition="TEXT")
+
+	@Column(columnDefinition = "TEXT")
 	private String content;
-	
+
 	private LocalDateTime createDate;
-	
+
 	@ManyToOne
 	private Question question;
-	
+
 	@ManyToOne
 	public SiteUser author;
-	
+
 	private LocalDateTime modifyDate;
-	
+
 	@ManyToMany
 	Set<SiteUser> voter;
-	
+
 	@OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
 	private List<Comment> commentList;
+
+	private LocalDateTime lastAnswerTime;
+	
+	@PrePersist
+	@PreUpdate
+	public void updateCurrentAnswerTime() {
+		if(this.question!=null) this.question.setLastAnswerTime(LocalDateTime.now());
+	}
+
 }

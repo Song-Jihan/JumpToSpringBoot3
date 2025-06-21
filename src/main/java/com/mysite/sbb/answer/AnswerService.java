@@ -34,17 +34,21 @@ public class AnswerService {
 	
 	public Page<Answer> getList(Question question,int page){
 		List<Sort.Order> sorts=new ArrayList<>();
-		sorts.add(Sort.Order.desc("voter"));
-		sorts.add(Sort.Order.asc("createDate")); 
+		sorts.add(Sort.Order.desc("id")); 
 		Pageable pageable=PageRequest.of(page, 5, Sort.by(sorts));
 		return this.answerRepository.findAllByQuestion(question, pageable);
 	}
 	
 	public Page<Answer> getListByAuthor(int page,SiteUser siteuser){
 		List<Sort.Order> sorts=new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate"));
+		sorts.add(Sort.Order.desc("id"));
 		Pageable pageable=PageRequest.of(page, 5, Sort.by(sorts));
 		return this.answerRepository.findByAuthor(siteuser,pageable);
+	}
+	
+	public Page<Answer> getListOrderByRecommandation(Question question,int page){
+		Pageable pageable=PageRequest.of(page, 5);
+		return this.answerRepository.findByQuestionIdOrderedByVoteCount(question.getId(),pageable);
 	}
 	
 	public Answer getAnswer(Integer id) {

@@ -12,6 +12,14 @@
 		</div>
 	</div>
 
+
+	<div class="btn-group float-end" role="group">
+	    <!-- 최근 답변순 -->
+	    <a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentAnswer')}" class="btn btn-link">최근 답변순</a>
+	    <!-- 최근 댓글순 -->
+	    <a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentComment')}" class="btn btn-link">최근 댓글순</a>
+	</div>>
+
 	<table class="table">
 		<thead class="table-dark">
 			<tr class="text-center">
@@ -33,7 +41,7 @@
 				<td><span th:if="${question.author != null}" th:text="${question.author.username}"></span></td>
 				<td th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></td>
 			</tr>
-			
+
 			<tr th:if="${paging.empty}">
 				<td colspan="4" class="text-center">게시글이 존재하지 않습니다.</td>
 			</tr>
@@ -62,8 +70,8 @@
 	</div>
 	<!-- 페이징처리 끝 -->
 
-	<form th:action="@{/question/list}" method="get" id="searchForm">
-		<input type="hidden" id="kw" name="kw" th:value="${kw}">
+	<form th:action="@{${requestURI}}" method="get" id="searchForm">
+		<input type="hidden" id="kw" name="kw" th:value="${kw}" placeholder="검색어 입력">
 		<input type="hidden" id="page" name="page" th:value="${paging.number}">
 	</form>
 </div>

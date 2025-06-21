@@ -39,10 +39,14 @@ public class QuestionController {
 	private final CategoryService categoryService;
 	
 	@GetMapping("/list")
-	public String list(Model model,@RequestParam(value="page",defaultValue="0") int page,
-			@RequestParam(value="kw",defaultValue="")String kw, HttpServletRequest request) {
+	public String list(Model model,
+			@RequestParam(value="page",defaultValue="0") int page,
+			@RequestParam(value="kw",defaultValue="")String kw, 
+			HttpServletRequest request) {
 		Page<Question> paging = this.questionService.getListByKeyword(page,kw,"질문게시판");
 		List<Category> categoryList=this.categoryService.getAll();
+		String requestURI=request.getRequestURI();
+		model.addAttribute("requestURI",requestURI);
 		model.addAttribute("paging",paging);
 		model.addAttribute("kw",kw);
 		model.addAttribute("categoryList", categoryList);
@@ -50,9 +54,11 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/freepost/list")
-	public String freepstList(Model model,@RequestParam(value="page",defaultValue="0") int page,
+	public String freepostList(Model model,@RequestParam(value="page",defaultValue="0") int page,
 			@RequestParam(value="kw",defaultValue="")String kw, HttpServletRequest request) {
 		Page<Question> paging = this.questionService.getListByKeyword(page,kw,"자유게시판");
+		String requestURI=request.getRequestURI();
+		model.addAttribute("requestURI",requestURI);
 		model.addAttribute("paging",paging);
 		model.addAttribute("kw",kw);
 		return "question_list";
@@ -60,10 +66,27 @@ public class QuestionController {
 	
 	@GetMapping("/detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm,CommentForm commentForm,
-			@RequestParam(value="answerPage",defaultValue="0") int answerPage) {
+			@RequestParam(value="answerPage",defaultValue="0") int answerPage,HttpServletRequest request) {
 		Question question=this.questionService.getQuestion(id);
 		Page<Answer> answerPaging=this.answerService.getList(question, answerPage);
 		List<Category> categoryList=this.categoryService.getAll();
+		String requestURI=request.getRequestURI();
+		model.addAttribute("requestURI",requestURI);
+		model.addAttribute("question",question);
+		model.addAttribute("answerPaging",answerPaging);
+		model.addAttribute("commentForm",commentForm);
+		model.addAttribute("categoryList", categoryList);
+		return "question_detail";
+	}
+	
+	@GetMapping("voter/{id}")
+	public String sortByPopularity(Model model,@PathVariable("id") Integer id, AnswerForm answerForm,CommentForm commentForm,
+			@RequestParam(value="answerPage",defaultValue="0") int answerPage,HttpServletRequest request) {
+		Question question=this.questionService.getQuestion(id);
+		Page<Answer> answerPaging=this.answerService.getListOrderByRecommandation(question, answerPage);
+		List<Category> categoryList=this.categoryService.getAll();
+		String requestURI=request.getRequestURI();
+		model.addAttribute("requestURI",requestURI);
 		model.addAttribute("question",question);
 		model.addAttribute("answerPaging",answerPaging);
 		model.addAttribute("commentForm",commentForm);
@@ -139,4 +162,12 @@ public class QuestionController {
 		this.questionService.vote(question, siteUser);
 		return String.format("redirect:/question/detail/%s", id);
 	}
+	
+	@GetMapping("/search/list")
+	public String searchFreeQuestions(@RequestParam("kw") String kw,@RequestParam(value="page",defaultValue="0") int page,Model model) {
+		Page<Question> questionPage = this.questionService.getListByKeyword(page, kw,"질문게시판");
+		model.addAttribute(questionPage);
+		return "question_list";
+	}
+
 }

@@ -44,4 +44,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 	Page<Question> findAllByKeyword(@Param("kw") String kw, Pageable pageable);
 	
 	Page<Question> findByCategory(Category category,Pageable pageable);
+	
+	Page<Question> findByCategoryId(int categoryId,Pageable pageable);
+	
+	Page<Question> findAllByCategoryIdOrderByCreateDateDesc(int categoryId,Pageable pageable);
 }

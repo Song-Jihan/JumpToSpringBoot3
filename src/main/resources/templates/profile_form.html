@@ -76,7 +76,7 @@
 
 	<h2 class="border-bottom py-2">내 답변</h2>
 	<!--답변 반복 시작-->
-	<div class="card my-3" th:each="answer: ${answerPaging}">
+	<div class="card my-3" th:each="answer: ${commentPaging}">
 		<a th:id="|answer_${answer.id}|"></a>
 		<div class="card-body">
 			<div class="card-text" th:utext="${@commonUtil.markdown(answer.content)}"></div>
@@ -138,21 +138,21 @@
 	<!--답변 반복 끝-->
 
 	<!-- 답변 페이징처리 시작 -->
-	<div th:if="${!answerPaging.isEmpty()}">
+	<div th:if="${!commentPaging.isEmpty()}">
 		<ul class="pagination justify-content-center">
-			<li class="page-item" th:classappend="${!answerPaging.hasPrevious} ? 'disabled'">
-				<a class="page-link answer-page-link" href="javascript:void(0)" th:data-page="${answerPaging.number-1}">
+			<li class="page-item" th:classappend="${!commentPaging.hasPrevious} ? 'disabled'">
+				<a class="page-link answer-page-link" href="javascript:void(0)" th:data-page="${commentPaging.number-1}">
 					<span>이전</span>
 				</a>
 			</li>
-			<li th:each="page: ${#numbers.sequence(0, answerPaging.totalPages-1)}"
-				th:if="${page >= answerPaging.number-5 and page <= answerPaging.number+5}"
-				th:classappend="${page == answerPaging.number} ? 'active'" class="page-item">
+			<li th:each="page: ${#numbers.sequence(0, commentPaging.totalPages-1)}"
+				th:if="${page >= commentPaging.number-5 and page <= commentPaging.number+5}"
+				th:classappend="${page == commentPaging.number} ? 'active'" class="page-item">
 				<a th:text="${page}" class="page-link answer-page-link" href="javascript:void(0)"
 					th:data-page="${page}"></a>
 			</li>
-			<li class="page-item" th:classappend="${!answerPaging.hasNext} ? 'disabled'">
-				<a class="page-link answer-page-link" href="javascript:void(0)" th:data-page="${answerPaging.number+1}">
+			<li class="page-item" th:classappend="${!commentPaging.hasNext} ? 'disabled'">
+				<a class="page-link answer-page-link" href="javascript:void(0)" th:data-page="${commentPaging.number+1}">
 					<span>다음</span>
 				</a>
 			</li>
@@ -162,7 +162,7 @@
 
 	<!--답변 페이징 검색 폼-->
 	<form th:action="@{/user/profile}" method="get" id="answerPageForm">
-		<input type="hidden" id="answerPage" name="answerPage" th:value="${answerPaging.number}">
+		<input type="hidden" id="answerPage" name="answerPage" th:value="${commentPaging.number}">
 	</form>
 	<form th:action="@{/user/profile}" method="get" id="searchForm">
 		<input type="hidden" id="questionPage" name="questionPage" th:value="${questionPaging.number}">

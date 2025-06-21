@@ -16,6 +16,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,4 +47,13 @@ public class Comment {
 	
 	@ManyToMany
 	private Set<SiteUser> voter;
+	
+	private LocalDateTime lastCommentTime;
+	
+	@PrePersist
+	@PreUpdate
+	public void updateLastCommentTime() {
+		if(this.question!=null) this.question.setLastCommentTime(LocalDateTime.now());
+	}
+
 }

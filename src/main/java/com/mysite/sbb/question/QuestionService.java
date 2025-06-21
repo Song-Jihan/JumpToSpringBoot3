@@ -53,7 +53,7 @@ public class QuestionService {
 	
 	public Page<Question> getListByKeyword(int page,String kw,String categoryName){
 		List<Sort.Order> sorts=new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate"));
+		sorts.add(Sort.Order.desc("id"));
 		Pageable pageable=PageRequest.of(page, 10, Sort.by(sorts));
 		Specification<Question> spec=search(kw,categoryName);
 		//Specification을 통한 Query문 자동 구현
@@ -65,7 +65,7 @@ public class QuestionService {
 	
 	public Page<Question> getListByAuthor(int page,SiteUser siteuser){
 		List<Sort.Order> sorts=new ArrayList<>();
-		sorts.add(Sort.Order.desc("createDate"));
+		sorts.add(Sort.Order.desc("id"));
 		Pageable pageable=PageRequest.of(page, 5, Sort.by(sorts));
 		return this.questionRepository.findByAuthor(siteuser,pageable);
 	}
@@ -105,4 +105,22 @@ public class QuestionService {
 		question.getVoter().add(siteUser);
 		this.questionRepository.save(question);
 	}
+	
+	public Page<Question> getListSorted(int page,String kw,String categoryName,String sort){
+		Pageable pageable=PageRequest.of(page, 10, getSortingCriteria(sort));
+		Specification<Question> spec=search(kw,categoryName);
+		return this.questionRepository.findAll(spec,pageable);
+	}
+	
+	private Sort getSortingCriteria(String sortKey) {
+		switch(sortKey) {
+			case "recentlyAnswer":
+				return Sort.by(Sort.Direction.DESC,"lastAnswerTime");
+			case "recentlyComment":
+				return Sort.by(Sort.Direction.DESC,"lastCommentTime");
+			default:
+				return Sort.by(Sort.Direction.DESC,"id");
+		}
+	}
+	
 }
