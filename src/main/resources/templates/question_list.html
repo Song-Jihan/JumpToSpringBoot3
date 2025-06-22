@@ -14,11 +14,13 @@
 
 
 	<div class="btn-group float-end" role="group">
-	    <!-- 최근 답변순 -->
-	    <a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentAnswer')}" class="btn btn-link">최근 답변순</a>
-	    <!-- 최근 댓글순 -->
-	    <a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentComment')}" class="btn btn-link">최근 댓글순</a>
-	</div>>
+		<!-- 최근 답변순 -->
+		<a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentAnswer')}"
+			class="btn btn-link">최근 답변순</a>
+		<!-- 최근 댓글순 -->
+		<a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentComment')}"
+			class="btn btn-link">최근 댓글순</a>
+	</div>
 
 	<table class="table">
 		<thead class="table-dark">
@@ -70,7 +72,8 @@
 	</div>
 	<!-- 페이징처리 끝 -->
 
-	<form th:action="@{${requestURI}}" method="get" id="searchForm">
+	<form th:action="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentAnswer')}" method="get" id="searchForm">
+		<input type="hidden" id="categoryId" name="categoryId" th:value="${categoryId}">
 		<input type="hidden" id="kw" name="kw" th:value="${kw}" placeholder="검색어 입력">
 		<input type="hidden" id="page" name="page" th:value="${paging.number}">
 	</form>

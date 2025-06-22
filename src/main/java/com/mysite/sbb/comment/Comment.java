@@ -1,7 +1,5 @@
 package com.mysite.sbb.comment;
 
-
-
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -26,34 +24,35 @@ import lombok.Setter;
 @Entity
 public class Comment {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	
-	@Column(columnDefinition="TEXT")
+
+	@Column(columnDefinition = "TEXT")
 	String content;
-	
+
 	private LocalDateTime createDate;
-	
+
 	private LocalDateTime modifyDate;
-	
+
 	@ManyToOne
 	public SiteUser author;
-	
+
 	@ManyToOne
 	private Question question;
-	
+
 	@ManyToOne
 	private Answer answer;
-	
+
 	@ManyToMany
 	private Set<SiteUser> voter;
-	
+
 	private LocalDateTime lastCommentTime;
-	
+
 	@PrePersist
 	@PreUpdate
 	public void updateLastCommentTime() {
-		if(this.question!=null) this.question.setLastCommentTime(LocalDateTime.now());
+		if (this.question != null)
+			this.question.setLastCommentTime(LocalDateTime.now());
 	}
 
 }

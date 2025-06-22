@@ -56,7 +56,7 @@ public class Question {
 	@ManyToOne
 	private Category category;
 	
-	private LocalDateTime lastAnswerTime;	
+	private LocalDateTime lastAnswerTime;
 	
 	private LocalDateTime lastCommentTime;
 

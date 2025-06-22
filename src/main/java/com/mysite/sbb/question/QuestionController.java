@@ -42,24 +42,22 @@ public class QuestionController {
 	public String list(Model model,
 			@RequestParam(value="page",defaultValue="0") int page,
 			@RequestParam(value="kw",defaultValue="")String kw, 
+			@RequestParam(value="categoryId",required=false) Integer categoryId,
+			@RequestParam(value="sort",defaultValue="newest") String sort,
 			HttpServletRequest request) {
-		Page<Question> paging = this.questionService.getListByKeyword(page,kw,"질문게시판");
+		Page<Question> paging;
+		if(categoryId!=null) {
+			paging = this.questionService.getListByCategoryAndSorted(page,kw,categoryId,sort);
+		} else {
+			paging = this.questionService.getListSorted(page,kw,sort);
+		}
 		List<Category> categoryList=this.categoryService.getAll();
 		String requestURI=request.getRequestURI();
 		model.addAttribute("requestURI",requestURI);
 		model.addAttribute("paging",paging);
-		model.addAttribute("kw",kw);
+		model.addAttribute("categoryId",categoryId);
+		model.addAttribute("page", page);
 		model.addAttribute("categoryList", categoryList);
-		return "question_list";
-	}
-	
-	@GetMapping("/freepost/list")
-	public String freepostList(Model model,@RequestParam(value="page",defaultValue="0") int page,
-			@RequestParam(value="kw",defaultValue="")String kw, HttpServletRequest request) {
-		Page<Question> paging = this.questionService.getListByKeyword(page,kw,"자유게시판");
-		String requestURI=request.getRequestURI();
-		model.addAttribute("requestURI",requestURI);
-		model.addAttribute("paging",paging);
 		model.addAttribute("kw",kw);
 		return "question_list";
 	}
@@ -79,7 +77,7 @@ public class QuestionController {
 		return "question_detail";
 	}
 	
-	@GetMapping("voter/{id}")
+	@GetMapping("/voter/{id}")
 	public String sortByPopularity(Model model,@PathVariable("id") Integer id, AnswerForm answerForm,CommentForm commentForm,
 			@RequestParam(value="answerPage",defaultValue="0") int answerPage,HttpServletRequest request) {
 		Question question=this.questionService.getQuestion(id);
@@ -164,8 +162,12 @@ public class QuestionController {
 	}
 	
 	@GetMapping("/search/list")
-	public String searchFreeQuestions(@RequestParam("kw") String kw,@RequestParam(value="page",defaultValue="0") int page,Model model) {
-		Page<Question> questionPage = this.questionService.getListByKeyword(page, kw,"질문게시판");
+	public String searchQuestions(Model model,
+			@RequestParam(value="page",defaultValue="0") int page,
+			@RequestParam(value="kw",defaultValue="")String kw,
+			@RequestParam(value="categoryId",required=false) Integer categoryId,
+			@RequestParam(value="sort",defaultValue="newest") String sort) {
+		Page<Question> questionPage = this.questionService.getListByCategoryAndSorted(page, kw,categoryId, sort);
 		model.addAttribute(questionPage);
 		return "question_list";
 	}

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mysite.sbb.DataNotFoundException;
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerService;
+import com.mysite.sbb.category.CategoryService;
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionService;
 
@@ -36,8 +37,9 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
-	private final QuestionService questionService;;
+	private final QuestionService questionService;
 	private final AnswerService answerService;
+	private final CategoryService categoryService;
 	private final JavaMailSender javaMailSender;
 
 	@GetMapping("/signup")
@@ -97,6 +99,7 @@ public class UserController {
 		SiteUser siteuser = this.userService.getUser(principal.getName());
 		Page<Question> questionPaging = this.questionService.getListByAuthor(questionPage, siteuser);
 		Page<Answer> commentPaging = this.answerService.getListByAuthor(answerPage, siteuser);
+		model.addAttribute("categoryList",categoryService.getAll());
 		model.addAttribute("username", siteuser.getUsername());
 		model.addAttribute("userEmail", siteuser.getEmail());
 		model.addAttribute("questionPaging", questionPaging);

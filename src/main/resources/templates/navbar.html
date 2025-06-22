@@ -15,12 +15,14 @@
 					<a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
 					<a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/profile}">내 정보</a>
 				</li>
-				<li>
-					<a class="nav-link" th:href="@{/question/list}">질문게시판</a>
-				</li>
-				<li>
-					<a class="nav-link" th:href="@{/question/freepost/list}">자유게시판</a>
-				</li>
+				
+				<ul class="nav">
+				    <li th:each="category : ${categoryList}">
+				        <a class="nav-link" th:href="@{/question/list(categoryId=${category.id})}" 
+				           th:text="${category.name}"></a>
+				    </li>
+				</ul>
+
 			</ul>
 		</div>
 	</nav>

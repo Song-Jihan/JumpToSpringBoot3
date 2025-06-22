@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.mysite.sbb.DataNotFoundException;
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.category.Category;
+import com.mysite.sbb.category.CategoryService;
 import com.mysite.sbb.user.SiteUser;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -29,8 +30,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class QuestionService {
 	private final QuestionRepository questionRepository;
+	private final CategoryService categoryService;
 	
-	private Specification<Question> search(String kw,String categoryName){
+	private Specification<Question> search(String kw,Integer categoryId){
 		return new Specification<>(){
 			private static final long serialVersionUID=1L;
 			@Override
@@ -46,16 +48,16 @@ public class QuestionService {
 						cb.like(a.get("content"),"%"+kw+"%"),
 						cb.like(u2.get("username"),"%"+kw+"%")),
 						//and
-						cb.like(c.get("name"),"%"+categoryName+"%"));
+						cb.equal(c.get("id"),categoryId));
 			}
 		};
 	}
 	
-	public Page<Question> getListByKeyword(int page,String kw,String categoryName){
+	public Page<Question> getListByKeyword(int page,String kw,Integer categoryId){
 		List<Sort.Order> sorts=new ArrayList<>();
 		sorts.add(Sort.Order.desc("id"));
 		Pageable pageable=PageRequest.of(page, 10, Sort.by(sorts));
-		Specification<Question> spec=search(kw,categoryName);
+		Specification<Question> spec=search(kw,categoryId);
 		//Specification을 통한 Query문 자동 구현
 		return this.questionRepository.findAll(spec,pageable);
 		
@@ -106,17 +108,23 @@ public class QuestionService {
 		this.questionRepository.save(question);
 	}
 	
-	public Page<Question> getListSorted(int page,String kw,String categoryName,String sort){
+	public Page<Question> getListSorted(int page,String kw,String sort){
 		Pageable pageable=PageRequest.of(page, 10, getSortingCriteria(sort));
-		Specification<Question> spec=search(kw,categoryName);
+		Specification<Question> spec=search(kw,categoryService.getCategoryByName("질문게시판").getId());
+		return this.questionRepository.findAll(spec,pageable);
+	}
+	
+	public Page<Question> getListByCategoryAndSorted(int page,String kw,Integer categoryId,String sort){
+		Pageable pageable=PageRequest.of(page, 10, getSortingCriteria(sort));
+		Specification<Question> spec=search(kw,categoryId);
 		return this.questionRepository.findAll(spec,pageable);
 	}
 	
 	private Sort getSortingCriteria(String sortKey) {
 		switch(sortKey) {
-			case "recentlyAnswer":
+			case "recentAnswer":
 				return Sort.by(Sort.Direction.DESC,"lastAnswerTime");
-			case "recentlyComment":
+			case "recentComment":
 				return Sort.by(Sort.Direction.DESC,"lastCommentTime");
 			default:
 				return Sort.by(Sort.Direction.DESC,"id");

@@ -50,11 +50,12 @@ public class Answer {
 	private List<Comment> commentList;
 
 	private LocalDateTime lastAnswerTime;
-	
+
 	@PrePersist
 	@PreUpdate
 	public void updateCurrentAnswerTime() {
-		if(this.question!=null) this.question.setLastAnswerTime(LocalDateTime.now());
+		if (this.question != null)
+			this.question.setLastAnswerTime(LocalDateTime.now());
 	}
 
 }
