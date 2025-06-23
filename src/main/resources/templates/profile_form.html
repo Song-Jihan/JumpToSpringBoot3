@@ -28,6 +28,7 @@
 					<th style="width:50%">제목</th>
 					<th>글쓴이</th>
 					<th>작성일시</th>
+					<th>조회수</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -41,6 +42,7 @@
 					</td>
 					<td><span th:if="${question.author != null}" th:text="${question.author.username}"></span></td>
 					<td th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></td>
+					<td th:text="${question.views}"></td>
 				</tr>
 
 				<tr th:if="${questionPaging.empty}">
@@ -80,18 +82,7 @@
 		<a th:id="|answer_${answer.id}|"></a>
 		<div class="card-body">
 			<div class="card-text" th:utext="${@commonUtil.markdown(answer.content)}"></div>
-			<div class="d-flex justify-content-end">
-				<div th:if="${answer.modifyDate!=null}" class="badge bg-light text-dark p-2 text-start mx-3">
-					<div class="mb-2">modified at</div>
-					<div th:text="${#temporals.format(answer.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
-				</div>
-				<div class="badge bg-light text-dark p-2 text-start">
-					<div class="mb-2">
-						<span th:if="${answer.author!=null}" th:text="${answer.author.username}"></span>
-					</div>
-					<div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></div>
-				</div>
-			</div>
+			<div th:replace="answer_info :: answerInfo(${answer})"></div>
 			<div class="my-3">
 				<a th:href="@{|/question/detail/${answer.question.id}|}" class="btn btn-sm btn-outline-secondary"
 					th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
@@ -111,19 +102,16 @@
 
 			<!--답변에 달린 댓글 리스트 시작-->
 			<div class="my-3 mx-2">
-				<div th:each="comment : ${answer.commentList}">
-					<div class="border p-2 my-1">
+				<div class="border p-2 my-1">
+					<div th:each="comment : ${answer.commentList}">
 						<div th:text="${comment.content}"></div>
 						<div class="d-flex justify-content-between small text-muted">
+							<div th:replace="comment_info :: commentInfo(${comment})"></div>
 							<div>
-								<span th:text="${comment.author.username}"></span> ·
-								<span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></span>
-							</div>
-							<div>
-								<a th:href="@{|/comment/modifyCommentOnAnswer/${comment.id}|}"
+								<a th:href="@{|/comment/modifyCommentOnQuestion/${comment.id}|}"
 									sec:authorize="isAuthenticated()"
 									th:if="${#authentication.name == comment.author.username}">수정</a>
-								<a th:href="@{|/comment/deleteCommentOnAnswer/${comment.id}|}"
+								<a th:href="@{|/comment/deleteCommentOnQuestion/${comment.id}|}"
 									sec:authorize="isAuthenticated()"
 									th:if="${#authentication.name == comment.author.username}">삭제</a>
 							</div>
@@ -141,7 +129,8 @@
 	<div th:if="${!commentPaging.isEmpty()}">
 		<ul class="pagination justify-content-center">
 			<li class="page-item" th:classappend="${!commentPaging.hasPrevious} ? 'disabled'">
-				<a class="page-link answer-page-link" href="javascript:void(0)" th:data-page="${commentPaging.number-1}">
+				<a class="page-link answer-page-link" href="javascript:void(0)"
+					th:data-page="${commentPaging.number-1}">
 					<span>이전</span>
 				</a>
 			</li>
@@ -152,7 +141,8 @@
 					th:data-page="${page}"></a>
 			</li>
 			<li class="page-item" th:classappend="${!commentPaging.hasNext} ? 'disabled'">
-				<a class="page-link answer-page-link" href="javascript:void(0)" th:data-page="${commentPaging.number+1}">
+				<a class="page-link answer-page-link" href="javascript:void(0)"
+					th:data-page="${commentPaging.number+1}">
 					<span>다음</span>
 				</a>
 			</li>

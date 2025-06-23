@@ -120,12 +120,25 @@ public class QuestionService {
 		return this.questionRepository.findAll(spec,pageable);
 	}
 	
+	public void viewsUp(Integer id) {
+		Optional<Question> oq=this.questionRepository.findById(id);
+		if(oq.isPresent()) {
+			Question question=oq.get();
+			question.setViews(question.getViews()+1);
+			this.questionRepository.save(question);
+		} else {
+			throw new DataNotFoundException("question not found");
+		}
+	}
+	
 	private Sort getSortingCriteria(String sortKey) {
 		switch(sortKey) {
 			case "recentAnswer":
 				return Sort.by(Sort.Direction.DESC,"lastAnswerTime");
 			case "recentComment":
 				return Sort.by(Sort.Direction.DESC,"lastCommentTime");
+			case "ByView":
+				return Sort.by(Sort.Direction.DESC,"views");
 			default:
 				return Sort.by(Sort.Direction.DESC,"id");
 		}

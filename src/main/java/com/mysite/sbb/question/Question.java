@@ -18,8 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -59,6 +58,10 @@ public class Question {
 	private LocalDateTime lastAnswerTime;
 	
 	private LocalDateTime lastCommentTime;
+	
+	@Column(columnDefinition="integer default 0")
+	@NotNull
+	private Integer views=0;
 
 	public void updateLastAnswerTime() {
 		this.lastAnswerTime=LocalDateTime.now();

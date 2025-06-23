@@ -14,6 +14,9 @@
 
 
 	<div class="btn-group float-end" role="group">
+		<!-- 조회순 -->
+		<a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='ByView')}"
+			class="btn btn-link">조회순</a>
 		<!-- 최근 답변순 -->
 		<a th:href="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentAnswer')}"
 			class="btn btn-link">최근 답변순</a>
@@ -29,6 +32,7 @@
 				<th style="width:50%">제목</th>
 				<th>글쓴이</th>
 				<th>작성일시</th>
+				<th>조회수</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -42,6 +46,7 @@
 				</td>
 				<td><span th:if="${question.author != null}" th:text="${question.author.username}"></span></td>
 				<td th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></td>
+				<td th:text="${question.views}"></td>
 			</tr>
 
 			<tr th:if="${paging.empty}">
@@ -72,7 +77,9 @@
 	</div>
 	<!-- 페이징처리 끝 -->
 
-	<form th:action="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentAnswer')}" method="get" id="searchForm">
+	<form
+		th:action="@{/question/list(categoryId=${categoryId != null ? categoryId : ''}, page=${page}, kw=${kw}, sort='recentAnswer')}"
+		method="get" id="searchForm">
 		<input type="hidden" id="categoryId" name="categoryId" th:value="${categoryId}">
 		<input type="hidden" id="kw" name="kw" th:value="${kw}" placeholder="검색어 입력">
 		<input type="hidden" id="page" name="page" th:value="${paging.number}">

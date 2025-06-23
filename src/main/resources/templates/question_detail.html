@@ -4,18 +4,7 @@
 	<div class="card my-3">
 		<div class="card-body">
 			<div class="card-text" th:utext="${@commonUtil.markdown(question.content)}"></div>
-			<div class="d-flex justify-content-end">
-				<div th:if="${question.modifyDate!=null}" class="badge bg-light text-dark p-2 text-start mx-3">
-					<div class="mb-2">modified at</div>
-					<div th:text="${#temporals.format(question.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
-				</div>
-				<div class="badge bg-light text-dark p-2 text-start">
-					<div class="mb-2">
-						<span th:if="${question.author!=null}" th:text="${question.author.username}"></span>
-					</div>
-					<div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></div>
-				</div>
-			</div>
+			<div th:replace="question_info :: questionInfo(${question})"></div>
 			<div class="my-3">
 				<a href="javascript:void(0)" class="recommend btn btn-sm btn-outline-secondary"
 					th:data-uri="@{|/question/vote/${question.id}|}">
@@ -48,10 +37,7 @@
 					<div class="border p-2 my-1">
 						<div th:text="${comment.content}"></div>
 						<div class="d-flex justify-content-between small text-muted">
-							<div>
-								<span th:text="${comment.author.username}"></span> ·
-								<span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></span>
-							</div>
+							<div th:replace="comment_info :: commentInfo(${comment})"></div>
 							<div>
 								<a th:href="@{|/comment/modifyCommentOnQuestion/${comment.id}|}"
 									sec:authorize="isAuthenticated()"
@@ -83,18 +69,8 @@
 		<a th:id="|answer_${answer.id}|"></a>
 		<div class="card-body">
 			<div class="card-text" th:utext="${@commonUtil.markdown(answer.content)}"></div>
-			<div class="d-flex justify-content-end">
-				<div th:if="${answer.modifyDate!=null}" class="badge bg-light text-dark p-2 text-start mx-3">
-					<div class="mb-2">modified at</div>
-					<div th:text="${#temporals.format(answer.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
-				</div>
-				<div class="badge bg-light text-dark p-2 text-start">
-					<div class="mb-2">
-						<span th:if="${answer.author!=null}" th:text="${answer.author.username}"></span>
-					</div>
-					<div th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></div>
-				</div>
-			</div>
+			<div th:replace="answer_info :: answerInfo(${answer})"></div>
+
 			<div class="my-3">
 				<a href="javascript:void(0)" class="recommend btn btn-sm btn-outline-secondary"
 					th:data-uri="@{|/answer/vote/${answer.id}|}">
@@ -123,19 +99,16 @@
 
 			<!--답변에 달린 댓글 리스트 시작-->
 			<div class="my-3 mx-2">
-				<div th:each="comment : ${answer.commentList}">
-					<div class="border p-2 my-1">
+				<div class="border p-2 my-1">
+					<div th:each="comment : ${answer.commentList}">
 						<div th:text="${comment.content}"></div>
 						<div class="d-flex justify-content-between small text-muted">
+							<div th:replace="comment_info :: commentInfo(${comment})"></div>
 							<div>
-								<span th:text="${comment.author.username}"></span> ·
-								<span th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></span>
-							</div>
-							<div>
-								<a th:href="@{|/comment/modifyCommentOnAnswer/${comment.id}|}"
+								<a th:href="@{|/comment/modifyCommentOnQuestion/${comment.id}|}"
 									sec:authorize="isAuthenticated()"
 									th:if="${#authentication.name == comment.author.username}">수정</a>
-								<a th:href="@{|/comment/deleteCommentOnAnswer/${comment.id}|}"
+								<a th:href="@{|/comment/deleteCommentOnQuestion/${comment.id}|}"
 									sec:authorize="isAuthenticated()"
 									th:if="${#authentication.name == comment.author.username}">삭제</a>
 							</div>

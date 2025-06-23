@@ -1,0 +1,22 @@
+<html>
+
+<body>
+	<div th:fragment="answerInfo(answer)">
+		<div class="d-flex justify-content-end">
+			<div class="badge bg-light text-dark p-2 text-start">
+				<div class="mb-1">
+					<span th:if="${answer.author!=null}" th:text="'작성자 : '+${answer.author.username}"></span>
+				</div>
+				<div class="mb-1">
+					<div th:text="${#temporals.format(answer.createDate, '작성일 : yyyy-MM-dd HH:mm')}"></div>
+				</div>
+				<div class="mb-1">
+					<div th:if="${answer.modifyDate!=null}"
+						th:text="${#temporals.format(answer.modifyDate, '수정일 : yyyy-MM-dd HH:mm')}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

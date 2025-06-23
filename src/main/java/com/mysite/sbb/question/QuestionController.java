@@ -69,6 +69,7 @@ public class QuestionController {
 		Page<Answer> answerPaging=this.answerService.getList(question, answerPage);
 		List<Category> categoryList=this.categoryService.getAll();
 		String requestURI=request.getRequestURI();
+		this.questionService.viewsUp(id);
 		model.addAttribute("requestURI",requestURI);
 		model.addAttribute("question",question);
 		model.addAttribute("answerPaging",answerPaging);

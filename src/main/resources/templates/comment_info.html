@@ -1,0 +1,12 @@
+<html>
+
+<body>
+	<div th:fragment="commentInfo(comment)">
+		<div>
+			<span th:text="'작성자 : '+${comment.author.username}+' / '"></span>
+			<span th:text="${#temporals.format(comment.createDate, '작성일 : yyyy-MM-dd HH:mm')}"></span>
+		</div>
+	</div>
+</body>
+
+</html>
