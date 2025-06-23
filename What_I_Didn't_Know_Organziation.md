@@ -209,6 +209,7 @@
 
 
 * Column 어노테이션에 columnDefinition="TEXT" 을 지정하지 않으면 JPA가 자동으로 매핑
+  * columndefinition : JPA에서 엔티티의 필드를 테이블 컬럼으로 매핑 할 때, DB에 생성될 컬럼 구체적인 DDL 정의를 직접 지  
 
 
 * unique=true를 설정한 속성은 h2-console에 서두에 "UK_"가 붙음
