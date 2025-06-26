@@ -334,5 +334,24 @@
  * @PreUpdate : 엔티티가 DB에 업데이트되기 직전에 호출. 즉, 엔티티에 갱신된 데이터를 변경하기 전에 수행해야하는 작업.
 
 
- 
+ * OAuth (Open Authorization) : 사용자(Resource Owner)의 ID/PW가 아닌 accessToken을 활용하여 나의 서비스(Client)가 연동하고자 하는 서비스(Resource Server)와 연결될 수 있게 해줌
+   * accessToken : Client가 Resource Server(구글, 카카오 등)에 담겨있는 Resource Owner의 정보(Resource)를 활용하고 할때, Resource Server에 담긴 정보권한을 ID/PW 대신에 부분적으로(보안상의 이유 때문에) 접근할 수 있게 함. 일종의 Resource Owner를 보호하기 위한 특별 비밀번호.
+   * OAuth의 승인 리다이렉트 URI 설정
+     *SpringBoot 2 버전에서의 Security는 기본적으로 {도메인이름}/login/oauth2/code/{소셜서비스코드} 의 양식으로 리다이렉트 URL을 지원함.
+       * 다음과 같은 양식으로 작성 시, 별도의 리다이렉트를 요청하는 Controller를 생성 안해도 됨.
 
+
+ * Spring에서는 application-{profile}.properties 라는 양식을 통해 개발환경을 직접 구현 가능토록 함.
+   >> https://lejewk.github.io/springboot-gradle-spring-profiles-active/
+   * profile에 원하는 입력값을 넣기
+   * if) profile에 아무값도 안넣었다면? default 값으로 분류되어 application.properties로 인식됨. 
+
+
+ * 순환 참조 : 2개 이상의 Bean들이 서로를 참조하면서 객체 생성 시, 무한 루프에 빠지게 되는 현상
+   * 해결책 >> 객체간의 의존성을 줄이고 올바른 DI를 선택하자 
+
+
+ * Customizer.withDefaults() : 람다 함수 내부적으로 아무것도 하지 않을 것이기에 기본 설정으로 구성해달라는 뜻.
+   * 대개 Spring Security 등에서 활용되는 메서드
+
+ * 
