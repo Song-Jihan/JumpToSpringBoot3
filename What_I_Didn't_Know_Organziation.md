@@ -339,6 +339,12 @@
    * OAuth의 승인 리다이렉트 URI 설정
      *SpringBoot 2 버전에서의 Security는 기본적으로 {도메인이름}/login/oauth2/code/{소셜서비스코드} 의 양식으로 리다이렉트 URL을 지원함.
        * 다음과 같은 양식으로 작성 시, 별도의 리다이렉트를 요청하는 Controller를 생성 안해도 됨.
+   * OAuth2UserService 전체흐름
+     1. 사용자가 소셜 로그인 요청(OAuth2) 시, Request Server에 사용자 인증을 함.
+     2. 인증에 성공하면, Client에게 authorization code를 전달.
+     3. Client는 authorization code를 다시 Request Server에게 전달.
+     4. Request Server가 OAuth2UserRequest (accessToken) 과 ClientRegistration (어떤 소셜인지) 에 대한 정보를 제공.
+     5. 모든 필요한 인자를 받았으므로 Spring Security는 OAuth2UserService의 구현체 호출 통해 loadUser를 실행
 
 
  * Spring에서는 application-{profile}.properties 라는 양식을 통해 개발환경을 직접 구현 가능토록 함.
@@ -353,5 +359,13 @@
 
  * Customizer.withDefaults() : 람다 함수 내부적으로 아무것도 하지 않을 것이기에 기본 설정으로 구성해달라는 뜻.
    * 대개 Spring Security 등에서 활용되는 메서드
+
+
+ * .properties 파일 : Key=Value 형식으로 작성한 JAVA 환경 설정 및 구성 값 정의 파일.
+   * .yml 과 기능적인 면은 동일! properties보다 가독성 측면에서 우위!
+  
+
+ * @Builder : builder 패턴을 자동으로 구현해주는 어노테이션. 필드가 많은 객체일수록 생성자 대신 명확하고 유연한 객체 생성 가능.
+
 
  * 
