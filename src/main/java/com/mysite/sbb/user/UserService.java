@@ -25,6 +25,16 @@ public class UserService {
 		return user;
 	}
 	
+	public SiteUser create(String registrationId, String username,String password,String email) {
+		SiteUser user=new SiteUser();
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPassword(passwordEncoder.encode(password));
+		user.setRegisterId(registrationId);
+		this.userRepository.save(user);
+		return user;
+	}
+	
 	public SiteUser getUser(String username) {
 		Optional<SiteUser> siteUser=this.userRepository.findByUsername(username);
 		if(siteUser.isPresent()) {
@@ -52,5 +62,14 @@ public class UserService {
 	public boolean MatchPassword(String rawPassword,String encodedPassword) {
 		//if(rawPassword==null || encodedPassword==null) return false;
 		return this.passwordEncoder.matches(rawPassword, encodedPassword);
+	}
+	
+	public SiteUser socialLogin(String registrationId,String username,String email) {
+		Optional<SiteUser> _siteuser=this.userRepository.findByEmail(email);
+		if(_siteuser.isPresent()) {
+			return _siteuser.get();
+		} else {
+			return this.create(registrationId, username, "", email);
+		}
 	}
 }
