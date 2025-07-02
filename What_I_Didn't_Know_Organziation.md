@@ -1,6 +1,7 @@
 # 점프 투 스프링부트3 모르는 점 및 용어정리
 
 ## 위키독스 링크: [https://wikidocs.net/160023](https://wikidocs.net/160023)
+## AWS Lightsail: [https://lightsail.aws.amazon.com/](https://lightsail.aws.amazon.com/)
 ### 라이브러리 및 인터페이스 참고 사이트(docs) 
 > Bootstrap : [https://getbootstrap.com/docs/5.3/getting-started/introduction/](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 > 
@@ -381,11 +382,22 @@
    * 장점: 외부에서 접근하기 용이, DNS 설정 용이
 
   
- * SSH : 안전한 원격 접속을 위한 프로토콜. 서버 관리 및 개발 작업에 특화.
+ * SSH (Secure Shell) : 안전한 원격 접속을 위한 프로토콜. 서버 관리 및 개발 작업에 특화.
    * 보안 - 암호화 기술을 통해 데이터를 보호
    * 원격 접속 - 네트워크를 통해 다른 컴퓨터에 접속하여 명령을 실행하고 파일을 관리
    * 인증 - 사용자 인증과 서버 인증을 통해 보안 강
    * 다중화 - 하나의 연결에서 여러 논리 채널을 생성하여 효율적인 전송 가능
+
+  
+ * FTP (File Transfer Protocol) : 파일 전송 프로토콜. (Port=21) 21번 포트와 20번 포트를 통해 서버와 클라이언트가 서로 명령어와 파일을 패킷으로 주고받을 수 있게함.
+   >> 여기서의 클라이언트 : FTP를 사용하는 프로그램 및 원격 시스템 
+   * 장점: 동시에 여러 파일을 전송가능, 연결이 끊긴 후에도 전송 재개 가능, 전송 일정 예약 가능 
+   * 단점: 명령어 및 파일을 평문으로 보내기 때문에 보안에 취약함
+
+      
+ * SFTP (SSH File Transfer Protocol) : FTP에 SSH를 적용하여 보안을 강화한 SSH 확장 프로토콜. (Port=22)
+   * 장점: 패킷을 암호화하여 전송하기 때문에 보안에 강력
+   * 단점: 압축 여부와 상관없이 무조건 한번에 4GB 이하의 파일만 전송 가능
 
   
  * 
