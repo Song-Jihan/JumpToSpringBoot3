@@ -400,4 +400,13 @@
    * 단점: 압축 여부와 상관없이 무조건 한번에 4GB 이하의 파일만 전송 가능
 
   
- * 
+ * 서버 인스턴스를 통해 웹 페이지를 열 때, (ModaXterm 등) 무한로딩에 걸린채 제대로 열리지 않는다면?
+   * 유력한 원인 : 메모리 부족 현상 -> 스왑 기능(Memory Swap)을 통해 해결하자! 
+     * 스왑 기능이란 서버가 갖고 있던 RAM의 메모리가 부족할 때, 서버의 보조기억장치를 활용해 추가적인 메모리로 사용할 수 있게 해주는 기능!
+       >> sudo fallocate -l 1G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -h
+       
+       >> 1기가만큼을 추가로 할당하겠다는 의미 
