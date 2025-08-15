@@ -405,12 +405,22 @@
      * 스왑 기능이란 서버가 갖고 있던 RAM의 메모리가 부족할 때, 서버의 보조기억장치를 활용해 추가적인 메모리로 사용할 수 있게 해주는 기능!
      * 다만, 서버를 재부팅 할때마다 스왑 설정을 다시 해주어야함
        >> sudo fallocate -l 1G /swapfile
-          sudo chmod 600 /swapfile
-          sudo mkswap /swapfile
-          sudo swapon /swapfile
-          free -h
+
+       >> sudo chmod 600 /swapfile
+
+       >> sudo mkswap /swapfile
+
+       >> sudo swapon /swapfile
+
+       >> free -h
        
        >> 1기가만큼을 추가로 할당하겠다는 의미
        
 
- *
+ * 처음에 서버에 jar 파일을 배포할때, 404가 뜬다면 category db가 비어있어 DataNotFoundException이 발생했기 때문이었다.
+   * 해결법) 서버를 처음 접속하자마자 category db를 보고 필수적인 데이터가 없다면 바로 그 자리에서 category를 새로 생성하는 DataInit.java 를 생성
+
+
+ * @Configuration : Spring 컨테이너에서 설정 클래스임을 명시함.
+   * application.properties 를 대신하여 Java에서 자체적으로 Bean 설정을 작성 가능! (대신 완전 대체 가능하다는 뜻은 아님. 상호 보완적)
+
