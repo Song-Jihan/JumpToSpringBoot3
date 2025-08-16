@@ -418,9 +418,20 @@
        
 
  * 처음에 서버에 jar 파일을 배포할때, 404가 뜬다면 category db가 비어있어 DataNotFoundException이 발생했기 때문이었다.
+   * Problem 쉽게 찾는 법) Properties 파일에 디버그를 위해 다음과 같은 코드를 추가 작성. ssh dash에 모든 로그내역이 뜨면서 어디에 문제가 있는지 상세하게 확인가능
+     >> logging.level.org.springframework.web=DEBUG
+     
+     >> logging.level.org.thymeleaf=DEBUG
+     
    * 해결법) 서버를 처음 접속하자마자 category db를 보고 필수적인 데이터가 없다면 바로 그 자리에서 category를 새로 생성하는 DataInit.java 를 생성
 
 
  * @Configuration : Spring 컨테이너에서 설정 클래스임을 명시함.
    * application.properties 를 대신하여 Java에서 자체적으로 Bean 설정을 작성 가능! (대신 완전 대체 가능하다는 뜻은 아님. 상호 보완적)
+  
+ * nano 편집기 : 리눅스 기반 OS에서 이용가능한 간단한 터미널 텍스트 편집기
+ 
+ * properties파일들에 spring.profiles.include로 같은 것을 참조할 시, spring에선 오류로 간주! (잠재적 위험)
+   * properties들이 중복적으로 include를 이용할때 차후 무한 루프가 발생할 가능성이 존재함. 따라서, 원천적으로 차단시킴.
+     >> 예시로, 영화관에서 외부 음식 반입 금지 문구 써있음. 하지만 내 가방엔 생수 한통만 있음. 실질적으론 당장 아무 문제 없지만 모두 통일된 규칙에 따라야함.    
 
