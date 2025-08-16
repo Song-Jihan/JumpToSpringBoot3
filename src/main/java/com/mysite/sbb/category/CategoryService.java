@@ -16,6 +16,9 @@ public class CategoryService {
 	private final CategoryRepository categoryRepository;
 	
 	public Category create(String name) {
+		if(this.categoryRepository.findByName(name).isPresent()) {
+			return getCategoryByName(name);
+		}
 		Category category = new Category();
 		category.setName(name);
 		this.categoryRepository.save(category);
