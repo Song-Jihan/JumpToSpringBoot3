@@ -111,7 +111,7 @@ public class QuestionController {
 		SiteUser siteUser=this.userService.getUser(principal.getName());
 		Category category=this.categoryService.getCategoryByName(questionForm.getCategory());
 		this.questionService.create(questionForm.getSubject(),questionForm.getContent(),siteUser,category);
-		return "redirect:/question/list"; //질문 저장후 질문 목록으로 이동
+		return String.format("redirect:/question/list?categoryId=%d", category.getId()); //질문 저장후 질문 목록으로 이동
 	}
 	
 	@PreAuthorize("isAuthenticated()")
