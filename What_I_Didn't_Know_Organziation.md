@@ -100,7 +100,7 @@
     * String을 리턴하는 메서드가 존재할 경우, @ResponseBody는 해당 리턴값의 String을 그대로 클라이언트에게 전송. @Controller를 통해 (View를 전달하려는 목적이라면)해당 리턴값의 String과 동일한 이름을 가진 템플릿 파일(.html)을 탐색하여 전송
 
 
-* html에서 <th> = table head, <th: . . . > = thymeleaf의 속성
+* html에서 th == table head, <th: . . . > == thymeleaf의 속성
 
 
 * SpringBoot에서 String 타입 메서드의 리턴타입이 어떤 응답(액션)을 취하는지 어떻게 정해질까?
